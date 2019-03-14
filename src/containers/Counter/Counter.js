@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
+import * as actionTypes from "../../store/action.constant";
 
 class Counter extends Component {
-  state = {
-    counter: 0
-  };
+  // state = {
+  //   counter: 0
+  // };
 
   //   counterChangedHandler = (action, value) => {
   //     switch (action) {
@@ -52,10 +53,14 @@ class Counter extends Component {
           clicked={this.props.onSubstractCounterAction}
         />
         <hr />
-        <button onClick={this.props.onStoreResultAction}>Store Result</button>
-        {this.props.storedResults.length > 0 ? (
+        <button
+          onClick={() => this.props.onStoreResultAction(this.props.counter)}
+        >
+          Store Result
+        </button>
+        {this.props.mapResults.length > 0 ? (
           <ul>
-            {this.props.storedResults.map(row => (
+            {this.props.mapResults.map(row => (
               <li
                 key={row.id}
                 onClick={() => this.props.onDeleteResultAction(row.id)}
@@ -72,19 +77,22 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
   return {
-    counter: state.counter,
-    storedResults: state.results
+    counter: state.ctr.counter,
+    mapResults: state.res.results
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounterAction: () => dispatch({ type: "INCREMENT" }),
-    onDecrementCounterAction: () => dispatch({ type: "DECREMENT" }),
-    onAddCounterAction: () => dispatch({ type: "ADD", value: 5 }),
-    onSubstractCounterAction: () => dispatch({ type: "SUBSTRACT", value: 5 }),
-    onStoreResultAction: () => dispatch({ type: "STORE_RESULT" }),
-    onDeleteResultAction: id => dispatch({ type: "DELETE_RESULT", id: id })
+    onIncrementCounterAction: () => dispatch({ type: actionTypes.INCREMENT }),
+    onDecrementCounterAction: () => dispatch({ type: actionTypes.DECREMENT }),
+    onAddCounterAction: () => dispatch({ type: actionTypes.ADD, value: 5 }),
+    onSubstractCounterAction: () =>
+      dispatch({ type: actionTypes.SUBTRACT, value: 5 }),
+    onStoreResultAction: counter =>
+      dispatch({ type: actionTypes.STORE_RESULT, counter: counter }),
+    onDeleteResultAction: id =>
+      dispatch({ type: actionTypes.DELETE_RESULT, id: id })
   };
 };
 

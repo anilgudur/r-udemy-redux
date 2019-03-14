@@ -6,7 +6,7 @@ const initialState = {
 };
 
 // Reducer
-const rootReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "INC_COUNTER":
       return {
@@ -26,7 +26,7 @@ const rootReducer = (state = initialState, action) => {
 };
 
 // Store
-const store = createStore(rootReducer);
+const store = createStore(reducer);
 console.log("Store store.getState()::", store.getState());
 
 // Subscription
