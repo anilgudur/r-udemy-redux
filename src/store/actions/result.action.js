@@ -6,8 +6,10 @@ export const saveResult = counter => {
 };
 // with thunk i.e. Asynchronous execution
 export const storeResult = counter => {
-  return dispatch => {
+  return (dispatch, getState) => {
     setTimeout(() => {
+      const oldCounter = getState().ctr.counter;
+      console.log("oldCounter:", oldCounter);
       dispatch(saveResult(counter));
     }, 2000);
   };
